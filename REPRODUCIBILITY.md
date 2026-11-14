@@ -1,0 +1,5 @@
+# Reproducibility notes
+
+The three notebooks are self-contained. The embedded Python modules are also provided separately for inspection. Historical result ZIPs are unchanged. The pilot client configuration has been adapted to Gemini 3.5 Flash-Lite (the model used in the recorded experiment); final checkpoints now use local Colab storage with optional restoration. The final batch cell includes bounded retry handling for provider interruptions. No benchmark, prompt, repair budget, scoring rule, or historical result has been changed. The final study intentionally retains the original impact-selection prompt and its observed limitations. Notebook outputs were cleared for publication; no fresh LLM runs are claimed.
+
+Run the initial validation cells without credentials. For live evaluation, use your own Gemini API key entered via getpass. Install dependencies with `pip install -r requirements.txt` if using a local environment; Colab notebook cells include setup. Export checkpoint ZIPs after each batch. The final archive contains 216 records, including failed model outputs.

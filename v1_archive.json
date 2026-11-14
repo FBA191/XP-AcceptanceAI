@@ -1,0 +1,681 @@
+{
+  "C01": {
+    "metrics": {
+      "case": "C01",
+      "repeat": 1,
+      "method": "D",
+      "model": "gemini-3.5-flash-lite",
+      "correct_pass": true,
+      "passed_tests": 9,
+      "total_tests": 9,
+      "killed": [
+        "list_body_leak",
+        "detail_body_missing",
+        "comment_auth_bypass"
+      ],
+      "new_faults_killed": 1,
+      "new_faults_total": 1,
+      "regression_faults_killed": 2,
+      "regression_faults_total": 2,
+      "changed_existing": 1,
+      "unnecessary_changes": 0,
+      "added_tests": 0,
+      "failures": [],
+      "status": "evaluated",
+      "impact_precision": 1.0,
+      "impact_recall": 1.0,
+      "seconds": 1.8361137839999628,
+      "tokens": 2350,
+      "calls": 2
+    },
+    "suite": [
+      {
+        "id": "T02",
+        "steps": [
+          {
+            "method": "GET",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 200,
+              "checks": [
+                {
+                  "path": [
+                    "article",
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "Hello world"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "T03",
+        "steps": [
+          {
+            "method": "DELETE",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 204,
+              "checks": []
+            },
+            "auth": "alice"
+          },
+          {
+            "method": "GET",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 404,
+              "checks": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "T04",
+        "steps": [
+          {
+            "method": "DELETE",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 204,
+              "checks": []
+            },
+            "auth": "bob"
+          },
+          {
+            "method": "GET",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 404,
+              "checks": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "T05",
+        "steps": [
+          {
+            "method": "DELETE",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 401,
+              "checks": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "T06",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 401,
+              "checks": []
+            },
+            "json": {
+              "comment": {
+                "body": "hello"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T07",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 201,
+              "checks": [
+                {
+                  "path": [
+                    "comment",
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "x"
+                }
+              ]
+            },
+            "auth": "bob",
+            "json": {
+              "comment": {
+                "body": "x"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T08",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 201,
+              "checks": [
+                {
+                  "path": [
+                    "comment",
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "hello"
+                }
+              ]
+            },
+            "auth": "alice",
+            "json": {
+              "comment": {
+                "body": "hello"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T09",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 422,
+              "checks": []
+            },
+            "auth": "alice",
+            "json": {
+              "comment": {
+                "body": ""
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T01",
+        "steps": [
+          {
+            "method": "GET",
+            "path": "/api/articles",
+            "expect": {
+              "status": 200,
+              "checks": [
+                {
+                  "path": [
+                    "articles",
+                    0,
+                    "body"
+                  ],
+                  "op": "absent"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "C02": {
+    "metrics": {
+      "case": "C02",
+      "repeat": 1,
+      "method": "D",
+      "model": "gemini-3.5-flash-lite",
+      "correct_pass": true,
+      "passed_tests": 9,
+      "total_tests": 9,
+      "killed": [
+        "delete_any_user",
+        "delete_author_denied",
+        "comment_auth_bypass"
+      ],
+      "new_faults_killed": 1,
+      "new_faults_total": 1,
+      "regression_faults_killed": 2,
+      "regression_faults_total": 2,
+      "changed_existing": 1,
+      "unnecessary_changes": 0,
+      "added_tests": 0,
+      "failures": [],
+      "status": "evaluated",
+      "impact_precision": 1.0,
+      "impact_recall": 1.0,
+      "seconds": 1.9641527219998807,
+      "tokens": 2400,
+      "calls": 2
+    },
+    "suite": [
+      {
+        "id": "T01",
+        "steps": [
+          {
+            "method": "GET",
+            "path": "/api/articles",
+            "expect": {
+              "status": 200,
+              "checks": [
+                {
+                  "path": [
+                    "articles",
+                    0,
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "Hello world"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "T02",
+        "steps": [
+          {
+            "method": "GET",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 200,
+              "checks": [
+                {
+                  "path": [
+                    "article",
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "Hello world"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "T03",
+        "steps": [
+          {
+            "method": "DELETE",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 204,
+              "checks": []
+            },
+            "auth": "alice"
+          },
+          {
+            "method": "GET",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 404,
+              "checks": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "T05",
+        "steps": [
+          {
+            "method": "DELETE",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 401,
+              "checks": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "T06",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 401,
+              "checks": []
+            },
+            "json": {
+              "comment": {
+                "body": "hello"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T07",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 201,
+              "checks": [
+                {
+                  "path": [
+                    "comment",
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "x"
+                }
+              ]
+            },
+            "auth": "bob",
+            "json": {
+              "comment": {
+                "body": "x"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T08",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 201,
+              "checks": [
+                {
+                  "path": [
+                    "comment",
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "hello"
+                }
+              ]
+            },
+            "auth": "alice",
+            "json": {
+              "comment": {
+                "body": "hello"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T09",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 422,
+              "checks": []
+            },
+            "auth": "alice",
+            "json": {
+              "comment": {
+                "body": ""
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T04",
+        "steps": [
+          {
+            "method": "DELETE",
+            "path": "/api/articles/hello",
+            "auth": "bob",
+            "expect": {
+              "status": 403,
+              "checks": []
+            }
+          },
+          {
+            "method": "GET",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 200,
+              "checks": [
+                {
+                  "path": [
+                    "article",
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "Hello world"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "C03": {
+    "metrics": {
+      "case": "C03",
+      "repeat": 1,
+      "method": "D",
+      "model": "gemini-3.5-flash-lite",
+      "correct_pass": true,
+      "passed_tests": 9,
+      "total_tests": 9,
+      "killed": [
+        "comment_short_allowed",
+        "detail_body_missing"
+      ],
+      "new_faults_killed": 1,
+      "new_faults_total": 2,
+      "regression_faults_killed": 1,
+      "regression_faults_total": 1,
+      "changed_existing": 1,
+      "unnecessary_changes": 0,
+      "added_tests": 0,
+      "failures": [],
+      "status": "evaluated",
+      "impact_precision": 1.0,
+      "impact_recall": 1.0,
+      "seconds": 2.7343049979999705,
+      "tokens": 2331,
+      "calls": 2
+    },
+    "suite": [
+      {
+        "id": "T01",
+        "steps": [
+          {
+            "method": "GET",
+            "path": "/api/articles",
+            "expect": {
+              "status": 200,
+              "checks": [
+                {
+                  "path": [
+                    "articles",
+                    0,
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "Hello world"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "T02",
+        "steps": [
+          {
+            "method": "GET",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 200,
+              "checks": [
+                {
+                  "path": [
+                    "article",
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "Hello world"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "T03",
+        "steps": [
+          {
+            "method": "DELETE",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 204,
+              "checks": []
+            },
+            "auth": "alice"
+          },
+          {
+            "method": "GET",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 404,
+              "checks": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "T04",
+        "steps": [
+          {
+            "method": "DELETE",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 204,
+              "checks": []
+            },
+            "auth": "bob"
+          },
+          {
+            "method": "GET",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 404,
+              "checks": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "T05",
+        "steps": [
+          {
+            "method": "DELETE",
+            "path": "/api/articles/hello",
+            "expect": {
+              "status": 401,
+              "checks": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "T06",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 401,
+              "checks": []
+            },
+            "json": {
+              "comment": {
+                "body": "hello"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T08",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 201,
+              "checks": [
+                {
+                  "path": [
+                    "comment",
+                    "body"
+                  ],
+                  "op": "eq",
+                  "value": "hello"
+                }
+              ]
+            },
+            "auth": "alice",
+            "json": {
+              "comment": {
+                "body": "hello"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T09",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "expect": {
+              "status": 422,
+              "checks": []
+            },
+            "auth": "alice",
+            "json": {
+              "comment": {
+                "body": ""
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "T07",
+        "steps": [
+          {
+            "method": "POST",
+            "path": "/api/articles/hello/comments",
+            "auth": "bob",
+            "json": {
+              "comment": {
+                "body": "xx"
+              }
+            },
+            "expect": {
+              "status": 422,
+              "checks": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
